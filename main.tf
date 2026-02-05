@@ -40,26 +40,26 @@ resource "aws_instance" "Jenkins_Agent" {
     )
 }
 
-resource "aws_instance" "sonar" {
-    ami = local.ami_id
-    instance_type = "t2.large"
-    vpc_security_group_ids = [ aws_security_group.main.id ]
-    subnet_id = "subnet-01ea71230c86dea2b"
+# resource "aws_instance" "sonar" {
+#     ami = local.ami_id
+#     instance_type = "t2.large"
+#     vpc_security_group_ids = [ aws_security_group.main.id ]
+#     subnet_id = "subnet-01ea71230c86dea2b"
     
-    # root_block_device {
-    #     volume_size = 50
-    #     volume_type = "gp3" # or "gp2", depending on your preference
-    # }
+#     # root_block_device {
+#     #     volume_size = 50
+#     #     volume_type = "gp3" # or "gp2", depending on your preference
+#     # }
 
-    user_data = file("sonar.sh")
+#     user_data = file("sonar.sh")
 
-    tags =  merge(
-        local.common_tags,
-        {
-        Name = "${var.project_name}-${var.environment}-sonar"
-        }
-    )
-}
+#     tags =  merge(
+#         local.common_tags,
+#         {
+#         Name = "${var.project_name}-${var.environment}-sonar"
+#         }
+#     )
+# }
 
 resource "aws_security_group" "main" {
   name        =  "${var.project_name}-${var.environment}-jenkins"
@@ -88,8 +88,8 @@ resource "aws_security_group" "main" {
     ipv6_cidr_blocks = ["::/0"]
   }
   ingress {
-    from_port        = 9001
-    to_port          = 9001
+    from_port        = 9000
+    to_port          = 9000
     protocol         = "tcp"
     cidr_blocks      = ["0.0.0.0/0"]
     ipv6_cidr_blocks = ["::/0"]
@@ -121,11 +121,11 @@ resource "aws_route53_record" "jenkins-agent" {
     allow_overwrite = true
 }
 
-resource "aws_route53_record" "sonar" {
-    name = "sonar.${var.domain_name}"
-    zone_id = var.zone_id
-    ttl = 1
-    type = "A"
-    records = [ aws_instance.sonar.public_ip ]
-    allow_overwrite = true
-}
+# resource "aws_route53_record" "sonar" {
+#     name = "sonar.${var.domain_name}"
+#     zone_id = var.zone_id
+#     ttl = 1
+#     type = "A"
+#     records = [ aws_instance.sonar.public_ip ]
+#     allow_overwrite = true
+# }
