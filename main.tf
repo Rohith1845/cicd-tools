@@ -2,7 +2,7 @@ resource "aws_instance" "Jenkins" {
     ami = local.ami_id
     instance_type = "t3.small"
     vpc_security_group_ids = [ aws_security_group.main.id ]
-    subnet_id = "subnet-0c7591cecc58b73f3"
+    subnet_id = "subnet-052d2803dc9862ddb"
     
     root_block_device {
         volume_size = 50
@@ -23,7 +23,7 @@ resource "aws_instance" "Jenkins_Agent" {
     ami = local.ami_id
     instance_type = "t3.small"
     vpc_security_group_ids = [ aws_security_group.main.id ]
-    subnet_id = "subnet-0c7591cecc58b73f3"
+    subnet_id = "subnet-052d2803dc9862ddb"
     
     root_block_device {
         volume_size = 50
