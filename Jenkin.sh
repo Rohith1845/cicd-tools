@@ -7,7 +7,7 @@ lvextend -L +10G /dev/mapper/RootVG-rootVol
 lvextend -l +100%Free /dev/mapper/RootVG-homeVol
 
 xfs_growfs /
-xfs_geowfs /var
+xfs_growfs /var
 xfs_growfs /home
 
 curl -fsSL https://pkg.jenkins.io/redhat-stable/jenkins.repo -o /etc/yum.repos.d/jenkins.repo
