@@ -1,5 +1,5 @@
 #!/bin/bash
-
+yum update -y
 growpart /dev/nvme0n1 4
 
 lvextend -L +10G /dev/mapper/RootVG-varVol
